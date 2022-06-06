@@ -156,7 +156,7 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
-                ['RAM', 90],
+                ['RAM', "<?php include './partials/RAM.php';?>"],
             ]);
 
             var options = {
