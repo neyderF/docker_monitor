@@ -62,16 +62,16 @@
 
             <div
                 class="border bg-white shadow-lg shadow-zinc-300/50 rounded-md p-4 max-w-md w-full mx-2 flex flex-col my-2">
-                <div class="animate-pulse rounded-md bg-slate-200 h-44 w-full">
+
+                <div class="flex items-center justify-center rounded-md bg-slate-200 h-44 p-5 ">
+                    <div id="chart_disk_div" style=" height: 120px;"></div>
                 </div>
 
-
-                <div class="flex-1 space-y-2 py-1 mt-3">
+                <div class="flex flex-col py-1 text-center  mt-3">
                     <h3 class="font-bold text-red-500"> <i class="fa fa-hard-drive"></i> Uso del disco</h3>
                     <!-- <div class="mt-1">
-                        <p class="text-sm text-zinc-900">Esta grafica presenta...</p>
-                    </div> -->
-
+                    <p class="text-sm text-zinc-900">Esta grafica presenta el uso de CPU</p>
+                </div> -->
                 </div>
             </div>
             <div
@@ -96,7 +96,8 @@
                 </div>
 
                 <div class="flex flex-col py-1 text-center  mt-3">
-                    <h3 class="font-bold text-red-500"><i class="fa fa-microchip"></i> Uso de memoria RAM</h3>
+                    <h3 class="font-bold text-red-500"><i class="fa fa-memory"></i> Porcentaje de uso de memoria RAM
+                    </h3>
                     <!-- <div class="mt-1">
         <p class="text-sm text-zinc-900">Esta grafica presenta el uso de CPU</p>
     </div> -->
@@ -106,11 +107,67 @@
     <!--Finaliza Información del sistema -->
 
     <!-- Inicia información de los dockers -->
-    <section id="info-dockers" class="container mx-auto">
+    <section id="info-dockers" class="container mx-auto mt-20">
+        <div class="flex items-center flex-col ">
+            <h1 class="text-2xl font-bold text-zinc-900 dark:text-slate-200">
+                Información de los contenedores
+            </h1>
+            <h3 class="text-md font-normal max-w-sm  text-center text-zinc-800 dark:text-slate-200 mt-2">
+                Informe estadistico acerca de los contenedores detectados en el sistema
+            </h3>
+        </div>
 
+        <div id="containers-box" class="flex justify-evenly mt-10 flex-wrap">
+            <div
+                class="border bg-white shadow-lg shadow-zinc-300/50 rounded-md p-4 max-w-sm w-full mx-2 flex flex-col my-2 relative">
+                <i class="fa-brands fa-docker fa-4x  text-blue-200 absolute right-4"></i>
+                <div class="flex flex-col items-start text-zinc-900 ">
+                    <p class="text-sm text-zinc-500">ID del contenedor:</p>
+                    <p class="font-semibold">1cc15aae1502</p>
+                </div>
+                <div class="flex flex-col items-start text-zinc-900 mt-3">
+                    <p class="text-sm text-zinc-500">Nombre:</p>
+                    <p class="font-semibold">Apache container</p>
+                </div>
+
+                <div class="flex flex-col items-start text-zinc-900 mt-3">
+                    <p class="text-sm text-zinc-500">Estado:</p>
+                    <p class="font-semibold"><i class="fa-solid fa-circle text-green-500"></i> Activo</p>
+                </div>
+
+                <div class="flex flex-row justify-evenly text-zinc-900 mt-3">
+
+
+                    <div class="flex flex-col items-center ">
+                        <p class="text-sm text-zinc-500 mb-2">Uso de RAM:</p>
+                        <p class="font-semibold text-lg items-center flex text-red-500"><i
+                                class="fa fa-memory fa-2x mr-2 "></i> 2%</p>
+                    </div>
+                    <div class="flex flex-col items-center ">
+                        <p class="text-sm text-zinc-500 mb-2">Uso de CPU:</p>
+                        <p class="font-semibold text-lg items-center flex text-red-500"><i
+                                class="fa fa-microchip fa-2x mr-2"></i> 2%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!--Finaliza Información de los dockers -->
-    <footer>
+    <footer class="flex grow flex-col mt-20">
+        <div style="overflow: hidden;">
+            <svg
+              preserveAspectRatio="none"
+              viewBox="0 0 1200 120"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: #ffffff; width: 125%; height: 77px; transform: rotate(180deg) scaleX(-1);"
+            >
+              <path d="M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z" />
+            </svg>
+          </div>
+        <div class="flex grow py-10 bg-white items-center text-center text-zinc-500 flex-col text-lg font-semibold">
+            <p>Elaborado por Neyder Figueroa & Jean Michael Mendoza</p>
+            <p>&copy 2022 Universidad del Quindío</p>
+        </div>
 
     </footer>
 
@@ -118,9 +175,11 @@
 
     <script>
         google.charts.load('current', {
-            'packages': ['gauge']
+            'packages': ['gauge', 'corechart']
         });
         google.charts.setOnLoadCallback(drawCharts);
+
+        loadDockersInfo();
 
         /**Función ue renderiza los graficos
          * 
@@ -129,6 +188,7 @@
 
             drawCPUChart()
             drawMemoryChart();
+            drawDiskChart();
         }
 
         /**Se renderiza el grafico Gauge para mostrar el uso de la CPU
@@ -167,7 +227,7 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
-                ['RAM', 5],
+                ['RAM', 5.6],
                 // ['RAM', <%=valor_memoria>],
             ]);
 
@@ -186,6 +246,38 @@
 
             chart.draw(data, options);
         }
+
+        /**Se renderiza el grafico para mostrar información del disco
+        * 
+        */
+        function drawDiskChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Volumen', 'Espacio'],
+                ['/dev', 0],
+                ['/run', 2736],
+                ['/', 13586632],
+                ['/dev/shm', 276],
+                ['/run/lock', 4],
+                ['/sys/fs/cgroup', 0],
+                ['/boot/efi', 4],
+                ['/run/user/1000', 20],
+                ['/media/nfs-lm/VBox_GAs_6.1.322', 59770],
+            ]);
+
+            var options = {
+                title: 'My Daily Activities',
+                pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_disk_div'));
+            chart.draw(data, options);
+        }
+
+        function loadDockersInfo() {
+            var dockerSection = document.getElementById('containers-box');
+            // dockerSection.innerHTML = `<p>hola</p>`;
+        }
+
     </script>
 </body>
 
