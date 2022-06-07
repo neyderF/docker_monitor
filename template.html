@@ -430,12 +430,12 @@
 
                     <div class="flex flex-col items-center ">
                         <p class="text-sm text-zinc-500 mb-2">Uso de RAM:</p>
-                        <p class="font-semibold text-sm items-center flex text-red-500"><i
+                        <p class="font-semibold text-sm items-center flex text-${element["memory"]["percent"] === "0.00%" ? "zinc-200" : "green-400"}"><i
                                 class="fa fa-memory  mr-2 "></i> ${element["memory"]["percent"]}</p>
                     </div>
                     <div class="flex flex-col items-center ">
                         <p class="text-sm text-zinc-500 mb-2">Uso de CPU:</p>
-                        <p class="font-semibold text-sm items-center flex text-red-500"><i
+                        <p class="font-semibold text-sm items-center flex text-${element["memory"]["percent"] === "0.00%" ? "zinc-200" : "green-400"}"><i
                                 class="fa fa-microchip  mr-2"></i> ${element["cpu"]}</p>
                     </div>
                 </div>

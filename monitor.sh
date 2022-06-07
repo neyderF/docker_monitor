@@ -12,4 +12,6 @@ CONTAINERS_INFO=$(docker stats --no-stream -a --format "{\"containerID\":\"{{ .C
 
 sed -i 's/<%=valor_memoria>/'$MEMORY_FREE'/g' $OUTPUT_FILE
 
+sed -i 's/<%=info_contenedores>/'$CONTAINERS_INFO'/g' $OUTPUT_FILE
+
 
