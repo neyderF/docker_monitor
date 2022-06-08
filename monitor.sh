@@ -6,12 +6,12 @@ cp $INPUT_FILE $OUTPUT_FILE
 
 #Memoria libre
 MEMORY_FREE=$(free -m | head -2 | tail -n 1 | awk ' {print $4 }')
-
-#Informacion de contenedores en formato JSON
-CONTAINERS_INFO=$(docker stats --no-stream -a --format "{\"containerID\":\"{{ .Container }}\",\"containerName\":\"{{ .Name }}\",\"memory\":{\"raw\":\"{{ .MemUsage }}\",\"percent\":\"{{ .MemPerc }}\"},\"cpu\":\"{{ .CPUPerc }}\"},")
-
 sed -i 's/<%=valor_memoria>/'$MEMORY_FREE'/g' $OUTPUT_FILE
 
-sed -i 's/<%=info_contenedores>/'$CONTAINERS_INFO'/g' $OUTPUT_FILE
+#Al final no pude hacer lo de los docker reemplazando, entonces toca partir el documento en un unico punto
+#Pero eso se hace al final
+#OJO En el template.html hacer TODO encima del metodo loadDockersInfo
+CONTAINERS_INFO=`docker stats --no-stream -a --format "{\"containerID\":\"{{ .Container }}\",\"containerName\":\"{{ .Name }}\",\"memory\":{\"percent\":\"{{ .MemPerc }}\"},\"cpu\":\"{{ .CPUPerc }}\"},"`
+echo "$CONTAINERS_INFO" >> start.html
 
 
