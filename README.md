@@ -1,16 +1,50 @@
-# System Monitor
+# Monitor del sistema
 
-A one paragraph description about the container.
+Este contenedor permite generar una página html la cual es usada para monitorizar los recursos del servidor en el que se encuentre, la información presentada en la página html incluye:
 
-## Getting Started
+*  El uso de disco por directorios montados
+*  La cantidad de memoria ram libre
+*  El uso del procesador
+*  El estado los demás contenedores
 
-These instructions will cover usage information and for the docker container 
+Esta imagen está basada en [Apache HTTP Server](https://hub.docker.com/_/httpd) por lo que la página generada se encuentra expuesta en la red.
 
-### Prerequisities
+## ¿Cómo usar esta imagen?
 
+Para que los contenedores creados a partir de esta imagen funcionen correctamente es necesario realizar una configuración en el servidor ya que este es quien debe proporcionar la información al contenedor.
 
-In order to run this container you'll need docker installed.
+### Paso 1
 
+Ejecutar el siguiente comando para crear el contenedor. Tener en cuenta  que el directorio del servidor especificado al crear el volumen debe poder ser modificable. 
+
+```shell
+docker run -dit --name mi-monitor -p 80:80 -v "/home/<nombre_usuario>/monitor":/usr/local/apache2/htdocs/ systemMonitor:v1
+```
+### Paso 2
+
+Ejecutar el siguiente comando el cual copiara los archivos necesarios para generar la página html en el volumen compartido, esto se hace con el fin de que el usuario pueda ejecutar el script maestro desde el servidor.
+
+```shell
+docker exec -d mi-monitor cp -a /usr/local/apache2/tmp/. /usr/local/apache2/htdocs/
+```
+### Paso 3
+
+En el servidor en la ruta  `/home/<nombre_usuario>/monitor` ubicar el archivo `monitor.sh` y ejecutarlo. En caso de no tener permisos de ejecución se le debe proporcionar con el comando `chmod +x monitor.sh`
+```shell
+./monitor.sh
+```
+Si todo va bien, al dirigirse a la dirección http://localhost:80 podrá ver la página html con la información del sistema.
+
+Descargar los archivos alojados en [Este Repositorio](https://github.com/neyderF/docker_monitor), tras descomprimir el archivo deberá ver una estructura de carpetas como la siguiente:
+```shell
+├── ...
+├── monitor                    # Test files (alternatively `spec` or `tests`)
+│   ├── generated          # Load and stress tests
+│   ├── temp-part1.html         # End-to-end, integration tests (alternatively `e2e`)
+│   ├── temp-part2.html         # End-to-end, integration tests (alternatively `e2e`)
+│   └── monitor.sh               # Script que genera
+└── ...
+```
 * [Windows](https://docs.docker.com/windows/started)
 * [OS X](https://docs.docker.com/mac/started/)
 * [Linux](https://docs.docker.com/linux/started/)
@@ -73,18 +107,8 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the 
 [tags on this repository](https://github.com/your/repository/tags). 
 
-## Authors
+## Autores
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Neyder Figueroa** - *Software developer* - [Ver más](https://github.com/neyderF)
+* **Jean Michael Mendoza** - *Software developer* - [Ver más](https://github.com/maik1998)
 
-See also the list of [contributors](https://github.com/your/repository/contributors) who 
-participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-
-* People you want to thank
-* If you took a bunch of code from somewhere list it here
