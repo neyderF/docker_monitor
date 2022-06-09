@@ -58,13 +58,14 @@
                 Informe estadistico acerca del porcentaje de uso de la memoria ram, CPU, y disco del servidor anfitrión
             </h3>
         </div>
+        
         <div class="flex justify-evenly mt-10 flex-wrap">
 
             <div
                 class="border bg-white shadow-lg shadow-zinc-300/50 rounded-md p-4 max-w-md w-full mx-2 flex flex-col my-2">
 
                 <div class="flex items-center justify-center rounded-md bg-slate-200 h-44 p-5 ">
-                    <div id="chart_disk_div" style=" height: 120px;"></div>
+                    <div id="chart_disk_div"style="width: 900px; " ></div>
                 </div>
 
                 <div class="flex flex-col py-1 text-center  mt-3">
@@ -172,7 +173,7 @@
 
     <script>
         google.charts.load('current', {
-            'packages': ['gauge', 'corechart']
+            'packages': ['gauge', 'corechart','bar']
         });
         google.charts.setOnLoadCallback(drawCharts);
 
@@ -195,7 +196,7 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
-                // ['USO PROCESADOR', <%=valor_procesador>],
+                ['CPU %', <%=valor_procesador>],
             ]);
 
             var options = {
@@ -224,14 +225,14 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
-                // ['RAM', <%=valor_memoria>],
-                ['RAM', 5],
+                ['RAM', <%=valor_memoria>],
+                // ['RAM', 5],
             ]);
 
             var options = {
                 min: 0,
-                max: 1987,
-                //  max: <%=valor_total_memoria>,
+                // max: 1987,
+                 max: <%=valor_total_memoria>,
                 width: 400,
                 height: 120,
                 redFrom: 0,
@@ -262,14 +263,35 @@
                 ['/boot/efi', 4],
                 ['/run/user/1000', 20],
                 ['/media/nfs-lm/VBox_GAs_6.1.322', 59770],
+                ['/dev/shms', 276],
+                ['/run/lock', 4],
+                ['/sys/fs/csgroup', 0],
+                ['/boot/efis', 4],
+                ['/run/user3s/1000', 20],
+                ['/media/nsfs-lm3/VBox_GAs_6.1.322', 59770],
+                ['/run/user/1000', 20],
+                ['/media/nf3s-lm/VBox_GAs_6.1.322', 59770],
+                ['/dev/sh3ms', 276],
+                ['/run/lo3ck', 4],
+                ['/sys/f3s/csgroup', 0],
+                ['/boot/e3fis', 4],
+                ['/run/us3ers/1000', 20],
+                ['/2', 1386632],
+                ['/3', 1386632],
+                ['/4', 1386632],
+
+                ['/5', 1386632],
+                ['/6', 1386632],
+                ['/6', 1386632],
+                ['/media/n3sfs-lm/VBox_GAs_6.1.322', 59770],
             ]);
 
             var options = {
-                title: 'My Daily Activities',
-                pieHole: 0.4,
+                // title: 'My Daily Activities',
+                // pieHole: 0.5,
             };
-
             var chart = new google.visualization.PieChart(document.getElementById('chart_disk_div'));
+
             chart.draw(data, options);
         }
 
