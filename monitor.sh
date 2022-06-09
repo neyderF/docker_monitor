@@ -8,7 +8,7 @@ cp $INPUT_FILE $OUTPUT_FILE
 NUCLEOS=$(cat /proc/cpuinfo | grep "cpu cores" | cut -d':' -f2)
 
 #Uso del procesador
-PROCESSOR=$(top -bn2 | grep '%Cpu' | tail -1 | grep -P '(....|...) id,'|awk '{print $8 }')
+PROCESSOR=$(top -bn2 | grep '%Cpu' | tail -1 |awk '{print 100-$8 }')
 USE_PROCESSOR=$((100-($PROCESSOR * $NUCLEOS)))
 sed -i 's/<%=valor_procesador>/'$USE_PROCESSOR'/g' $OUTPUT_FILE
 
