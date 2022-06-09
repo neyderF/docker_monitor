@@ -64,11 +64,11 @@
             <div
                 class="border bg-white shadow-lg shadow-zinc-300/50 rounded-md p-4 max-w-md w-full mx-2 flex flex-col my-2">
 
-                <div class="flex items-center justify-center rounded-md bg-slate-200 h-44 p-5 ">
+                <div class="flex items-center justify-center rounded-md bg-white-200 h-44 p-5 ">
                     <div id="chart_disk_div"style="width: 900px; " ></div>
                 </div>
 
-                <div class="flex flex-col py-1 text-center  mt-3">
+                <div class="flex flex-col py-1 text-center bg-zinc-200 mt-3">
                     <h3 class="font-bold text-red-500"> <i class="fa fa-hard-drive"></i> Uso del disco</h3>
                     <!-- <div class="mt-1">
                     <p class="text-sm text-zinc-900">Esta grafica presenta el uso de CPU</p>
@@ -78,11 +78,11 @@
             <div
                 class="border bg-white shadow-lg shadow-zinc-300/50 rounded-md p-4 max-w-md w-full mx-2 flex flex-col my-2">
 
-                <div class="flex items-center justify-center rounded-md bg-slate-200 h-44 p-5 ">
+                <div class="flex items-center justify-center rounded-md bg-white-200 h-44 p-5 ">
                     <div id="chart_cpu_div" style=" height: 120px;"></div>
                 </div>
 
-                <div class="flex flex-col py-1 text-center  mt-3">
+                <div class="flex flex-col py-1 text-center bg-zinc-200 mt-3">
                     <h3 class="font-bold text-red-500"><i class="fa fa-microchip"></i> Uso de cpu</h3>
                     <!-- <div class="mt-1">
                         <p class="text-sm text-zinc-900">Esta grafica presenta el uso de CPU</p>
@@ -92,11 +92,11 @@
             <div
                 class="border bg-white shadow-lg shadow-zinc-300/50 rounded-md p-4 max-w-md w-full mx-2 flex flex-col my-2">
 
-                <div class="flex items-center justify-center rounded-md bg-slate-200 h-44 p-5 ">
+                <div class="flex items-center justify-center rounded-md bg-white h-44 p-5 ">
                     <div id="chart_memory_div" style=" height: 120px;"></div>
                 </div>
 
-                <div class="flex flex-col py-1 text-center  mt-3">
+                <div class="flex flex-col py-1 text-center bg-zinc-200 mt-3">
                     <h3 class="font-bold text-red-500"><i class="fa fa-memory"></i> Cantidad de memoria RAM libre en MB
                     </h3>
                     <!-- <div class="mt-1">
@@ -196,6 +196,7 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
+                // ['CPU %', 5],
                 ['CPU %', <%=valor_procesador>],
             ]);
 
@@ -374,60 +375,7 @@
                     },
                     "cpu": "0.00%"
                 },
-                {
-                    "containerID": "741f01890aa0",
-                    "containerName": "ubuntu-squid",
-                    "memory": {
-                        "raw": "0B / 0B",
-                        "percent": "0.00%"
-                    },
-                    "cpu": "0.00%"
-                },
-                {
-                    "containerID": "1cc15aae1502",
-                    "containerName": "ubuntu-apache",
-                    "memory": {
-                        "raw": "0B / 0B",
-                        "percent": "0.00%"
-                    },
-                    "cpu": "0.00%"
-                },
-                {
-                    "containerID": "95c4a8408074",
-                    "containerName": "ubuntu-base",
-                    "memory": {
-                        "raw": "0B / 0B",
-                        "percent": "0.00%"
-                    },
-                    "cpu": "0.00%"
-                },
-                {
-                    "containerID": "199fa3e31290",
-                    "containerName": "ubuntu-samba11",
-                    "memory": {
-                        "raw": "0B / 0B",
-                        "percent": "0.00%"
-                    },
-                    "cpu": "0.00%"
-                },
-                {
-                    "containerID": "7aac278087f0",
-                    "containerName": "intelligent_ishizaka",
-                    "memory": {
-                        "raw": "8.328MiB / 1.941GiB",
-                        "percent": "0.42%"
-                    },
-                    "cpu": "0.00%"
-                },
-                {
-                    "containerID": "95807e4829a1",
-                    "containerName": "alpine-test2",
-                    "memory": {
-                        "raw": "0B / 0B",
-                        "percent": "0.00%"
-                    },
-                    "cpu": "0.00%"
-                }
+            
             ]
 
             if (containerList.length > 0) {
